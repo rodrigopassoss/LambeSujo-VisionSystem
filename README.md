@@ -1,7 +1,8 @@
 # Sistema de Visão do Lambe Sujo
 Sistema de Visão Computacional e Comunicação equipe de futebol de robôs Lambe Sujo Categoria IEEE Very Small Size
 
-# vision
+# Criando um repositório
+
 Sistema de visão do lambe sujo
 
 (Abra o terminal)
