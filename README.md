@@ -8,7 +8,7 @@ Sistema de visão do lambe sujo
 
 1 - Selecione um diretório
 
-2 - git clone https://github.com/math3usc/vision.git
+2 - git clone https://github.com/rodrigopassoss/LambeSujo-VisionSystem.git
 
 3 - cd vision
 
