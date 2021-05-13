@@ -38,7 +38,7 @@ Sempre que for mexer no código, verificar se há novas alterações pra trabalh
 # Criar novo galho para edição
 1 - git checkout -b novoGalho
 
-# Após fazer mudanças, você deve salvá-las e refazer o upload dos arquivos.
+ Após fazer mudanças, você deve salvá-las e refazer o upload dos arquivos.
 
 1 - git add .
 
