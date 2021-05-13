@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<Camera_Settings>
+  <Brightness>64</Brightness>
+  <Saturation>99</Saturation>
+  <Exposure>10000</Exposure>
+  <ExpoAuto>68</ExpoAuto>
+  <Gamma>6648693</Gamma>
+  <Nitidez>1230982213</Nitidez>
+  <Ganho>1145634885</Ganho>
+  <WhiteBalance>1145634885</WhiteBalance>
+  <WhiteBalAuto>61</WhiteBalAuto>
+  <Luz_fundo>1146047839</Luz_fundo>
+  <Contrast>99</Contrast>
+  <Matiz>6648693</Matiz></Camera_Settings>
+<Cut_Frame_Points>
+  <X>37</X>
+  <Y>43</Y>
+  <Width>546</Width>
+  <Height>415</Height></Cut_Frame_Points>
+<Blue>
+  <Red_Max>255.</Red_Max>
+  <Red_Min>78.</Red_Min>
+  <Green_Max>255.</Green_Max>
+  <Green_Min>222.</Green_Min>
+  <Blue_Max>255.</Blue_Max>
+  <Blue_Min>78.</Blue_Min></Blue>
+<Yellow>
+  <Red_Max>248.</Red_Max>
+  <Red_Min>131.</Red_Min>
+  <Green_Max>255.</Green_Max>
+  <Green_Min>80.</Green_Min>
+  <Blue_Max>248.</Blue_Max>
+  <Blue_Min>131.</Blue_Min></Yellow>
+<Green>
+  <Red_Max>77.</Red_Max>
+  <Red_Min>0.</Red_Min>
+  <Green_Max>255.</Green_Max>
+  <Green_Min>90.</Green_Min>
+  <Blue_Max>81.</Blue_Max>
+  <Blue_Min>0.</Blue_Min></Green>
+<Orange>
+  <Red_Max>255.</Red_Max>
+  <Red_Min>0.</Red_Min>
+  <Green_Max>82.</Green_Max>
+  <Green_Min>0.</Green_Min>
+  <Blue_Max>26.</Blue_Max>
+  <Blue_Min>0.</Blue_Min></Orange>
+<Red>
+  <Red_Max>0.</Red_Max>
+  <Red_Min>0.</Red_Min>
+  <Green_Max>0.</Green_Max>
+  <Green_Min>0.</Green_Min>
+  <Blue_Max>0.</Blue_Max>
+  <Blue_Min>0.</Blue_Min></Red>
+<Magenta>
+  <Red_Max>0.</Red_Max>
+  <Red_Min>0.</Red_Min>
+  <Green_Max>0.</Green_Max>
+  <Green_Min>0.</Green_Min>
+  <Blue_Max>0.</Blue_Max>
+  <Blue_Min>0.</Blue_Min></Magenta>
+<Mascara>
+  <Format>1</Format>
+  <Size>3</Size>
+  <Size_close>6</Size_close></Mascara>
+<Resolution>
+  <Width>2019315755</Width>
+  <Height>1867329586</Height>
+  <index>727006540</index></Resolution>
+<Variaveis>
+  <ftop>415</ftop>
+  <fbot>6</fbot>
+  <gtopy>274</gtopy>
+  <gboty>150</gboty>
+  <fleftx>50</fleftx>
+  <frightx>505</frightx>
+  <gleft>12</gleft>
+  <gright>540</gright>
+  <area_left>100</area_left>
+  <area_right>458</area_right>
+  <lgoleiro>60</lgoleiro>
+  <lzagueiro>153</lzagueiro>
+  <area_topy>338</area_topy>
+  <area_boty>88</area_boty>
+  <p_area_b>180</p_area_b>
+  <p_area_t>240</p_area_t></Variaveis>
+</opencv_storage>

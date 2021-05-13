@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<Constantes_rb1>
+  <zona_morta_d_n>0</zona_morta_d_n>
+  <zona_morta_e_n>0</zona_morta_e_n>
+  <zona_morta_d_p>0</zona_morta_d_p>
+  <zona_morta_e_p>0</zona_morta_e_p>
+  <vmax>4.</vmax>
+  <klin>1.</klin>
+  <wmax>3.</wmax>
+  <kang>2.</kang></Constantes_rb1>
+<Constantes_rb2>
+  <zona_morta_d_n>0</zona_morta_d_n>
+  <zona_morta_e_n>0</zona_morta_e_n>
+  <zona_morta_d_p>0</zona_morta_d_p>
+  <zona_morta_e_p>0</zona_morta_e_p>
+  <vmax>4.</vmax>
+  <klin>1.</klin>
+  <wmax>3.</wmax>
+  <kang>2.</kang></Constantes_rb2>
+<Constantes_rb3>
+  <zona_morta_d_n>0</zona_morta_d_n>
+  <zona_morta_e_n>0</zona_morta_e_n>
+  <zona_morta_d_p>0</zona_morta_d_p>
+  <zona_morta_e_p>0</zona_morta_e_p>
+  <vmax>4.</vmax>
+  <klin>1.</klin>
+  <wmax>3.</wmax>
+  <kang>2.</kang></Constantes_rb3>
+</opencv_storage>
