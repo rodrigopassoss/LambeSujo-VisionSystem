@@ -1,12 +1,16 @@
 # Sistema de Visão do Lambe Sujo
 Sistema de Visão Computacional e Comunicação equipe de futebol de robôs Lambe Sujo Categoria IEEE Very Small Size
 
+![Logo](https://raw.githubusercontent.com/rodrigopassoss/LambeSujo-VisionSystem/master/imagens/oie_transparent.png)
+
+
 # Dependências
 1 - OpenCV: opencv4 
 
 2 - Real Sense: librealsense2
 
 # Interface
+
 ![Interface](https://raw.githubusercontent.com/rodrigopassoss/LambeSujo-VisionSystem/master/imagens/interface.png)
 
 # Criando um repositório
