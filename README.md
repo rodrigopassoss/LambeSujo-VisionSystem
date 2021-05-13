@@ -2,8 +2,9 @@
 Sistema de Visão Computacional e Comunicação equipe de futebol de robôs Lambe Sujo Categoria IEEE Very Small Size
 
 # Dependências
-1 - OpenCV: opencv4
-2 - RealSense: librealsense2
+1 - OpenCV: opencv4 
+
+2 - Real Sense: librealsense2
 
 # Interface
 ![Interface](https://raw.githubusercontent.com/rodrigopassoss/LambeSujo-VisionSystem/master/imagens/interface.png)
