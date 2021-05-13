@@ -64,7 +64,8 @@ SOURCES       = ../src/Ball.cpp \
 		../src/main.cpp \
 		../src/mainwindow.cpp \
 		../src/serialcomm.cpp \
-		../src/strategy.cpp moc_constantes_robot.cpp \
+		../src/strategy.cpp qrc_recurso.cpp \
+		moc_constantes_robot.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = Ball.o \
 		Build_Robot.o \
@@ -79,6 +80,7 @@ OBJECTS       = Ball.o \
 		mainwindow.o \
 		serialcomm.o \
 		strategy.o \
+		qrc_recurso.o \
 		moc_constantes_robot.o \
 		moc_mainwindow.o
 DIST          = /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/spec_pre.prf \
@@ -539,7 +541,8 @@ Makefile: ../LambeSujo-Vision.pro /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/linux-g
 		/home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/exceptions.prf \
 		/home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/yacc.prf \
 		/home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/lex.prf \
-		../LambeSujo-Vision.pro
+		../LambeSujo-Vision.pro \
+		../resources/recurso.qrc
 	$(QMAKE) -o Makefile ../LambeSujo-Vision.pro -spec linux-g++ CONFIG+=qtquickcompiler
 /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/spec_pre.prf:
 /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/common/unix.conf:
@@ -753,6 +756,7 @@ Makefile: ../LambeSujo-Vision.pro /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/linux-g
 /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/yacc.prf:
 /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/lex.prf:
 ../LambeSujo-Vision.pro:
+../resources/recurso.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../LambeSujo-Vision.pro -spec linux-g++ CONFIG+=qtquickcompiler
 
@@ -767,6 +771,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../resources/recurso.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/rodrigo/Qt/5.14.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../include/Ball.h ../include/Build_Robot.h ../include/Communication.h ../include/Configurations.h ../include/Grouping.h ../include/Robot.h ../include/Segmentation.h ../include/constantes_robot.h ../include/controlador.h ../include/mainwindow.h ../include/serialcomm.h ../include/strategy.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/Ball.cpp ../src/Build_Robot.cpp ../src/Communication.cpp ../src/Configurations.cpp ../src/Grouping.cpp ../src/Robot.cpp ../src/Segmentation.cpp ../src/constantes_robot.cpp ../src/controlador.cpp ../src/main.cpp ../src/mainwindow.cpp ../src/serialcomm.cpp ../src/strategy.cpp $(DISTDIR)/
@@ -799,8 +804,14 @@ compiler_qmlcache_clean:
 compiler_qmlcache_loader_make_all: qmlcache_loader.cpp
 compiler_qmlcache_loader_clean:
 	-$(DEL_FILE) qmlcache_loader.cpp
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_recurso.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_recurso.cpp
+qrc_recurso.cpp: ../resources/recurso.qrc \
+		/home/rodrigo/Qt/5.14.2/gcc_64/bin/rcc \
+		../imagens/oie_transparent.png
+	/home/rodrigo/Qt/5.14.2/gcc_64/bin/rcc -name recurso ../resources/recurso.qrc -o qrc_recurso.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -1087,39 +1098,97 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-Ball.o: ../src/Ball.cpp 
+Ball.o: ../src/Ball.cpp ../include/Ball.h \
+		../include/Configurations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Ball.o ../src/Ball.cpp
 
-Build_Robot.o: ../src/Build_Robot.cpp 
+Build_Robot.o: ../src/Build_Robot.cpp ../include/Build_Robot.h \
+		../include/Grouping.h \
+		../include/Robot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Build_Robot.o ../src/Build_Robot.cpp
 
-Communication.o: ../src/Communication.cpp 
+Communication.o: ../src/Communication.cpp ../include/Communication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPort \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialport.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlogging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qflags.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmutex.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPortInfo \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QDebug \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdebug.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhash.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlocale.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvariant.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qset.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QStringList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Communication.o ../src/Communication.cpp
 
-Configurations.o: ../src/Configurations.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Configurations.o ../src/Configurations.cpp
-
-Grouping.o: ../src/Grouping.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Grouping.o ../src/Grouping.cpp
-
-Robot.o: ../src/Robot.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Robot.o ../src/Robot.cpp
-
-Segmentation.o: ../src/Segmentation.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Segmentation.o ../src/Segmentation.cpp
-
-constantes_robot.o: ../src/constantes_robot.cpp ui_constantes_robot.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constantes_robot.o ../src/constantes_robot.cpp
-
-controlador.o: ../src/controlador.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controlador.o ../src/controlador.cpp
-
-main.o: ../src/main.cpp /home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplication \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qapplication.h \
+Configurations.o: ../src/Configurations.cpp ../include/Configurations.h \
+		../include/constantes_robot.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QWidget \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobal.h \
@@ -1145,20 +1214,21 @@ main.o: ../src/main.cpp /home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplic
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstring.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qchar.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearray.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrefcount.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qarraydata.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringview.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlist.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiterator.h \
@@ -1177,16 +1247,10 @@ main.o: ../src/main.cpp /home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplic
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qeventloop.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsize.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmargins.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcursor.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrect.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsize.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpalette.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcolor.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgb.h \
@@ -1211,6 +1275,7 @@ main.o: ../src/main.cpp /home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplic
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontmetrics.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontinfo.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcursor.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qkeysequence.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qevent.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvariant.h \
@@ -1226,18 +1291,551 @@ main.o: ../src/main.cpp /home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplic
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvector2d.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QString \
+		../include/Robot.h \
+		../include/Grouping.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Configurations.o ../src/Configurations.cpp
+
+Grouping.o: ../src/Grouping.cpp ../include/Grouping.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Grouping.o ../src/Grouping.cpp
+
+Robot.o: ../src/Robot.cpp ../include/Robot.h \
+		../include/Grouping.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Robot.o ../src/Robot.cpp
+
+Segmentation.o: ../src/Segmentation.cpp ../include/Segmentation.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Segmentation.o ../src/Segmentation.cpp
+
+constantes_robot.o: ../src/constantes_robot.cpp ../include/constantes_robot.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QWidget \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlogging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qflags.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmutex.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmargins.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrect.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsize.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpalette.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcolor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgb.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qbrush.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qregion.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qline.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtransform.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpainterpath.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qimage.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhash.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfont.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcursor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qkeysequence.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvariant.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdebug.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlocale.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qset.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurlquery.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfile.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvector2d.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QString \
+		../include/Robot.h \
+		../include/Grouping.h \
+		ui_constantes_robot.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QVariant \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/QIcon \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qicon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplication \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QComboBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qcombobox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvalidator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregularexpression.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qslider.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qstyle.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qframe.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGridLayout \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGroupBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLabel \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlabel.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QPushButton \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QSpacerItem \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QSpinBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QVBoxLayout
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constantes_robot.o ../src/constantes_robot.cpp
+
+controlador.o: ../src/controlador.cpp ../include/controlador.h \
+		../include/Robot.h \
+		../include/Grouping.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controlador.o ../src/controlador.cpp
+
+main.o: ../src/main.cpp ../include/mainwindow.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMainWindow \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlogging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qflags.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmutex.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmargins.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrect.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsize.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpalette.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcolor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgb.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qbrush.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qregion.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qline.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtransform.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpainterpath.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qimage.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhash.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfont.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcursor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qkeysequence.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvariant.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdebug.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlocale.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qset.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurlquery.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfile.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvector2d.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qicon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMessageBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QTimer \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtimer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasictimer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/QImage \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QFileDialog \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdir.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfileinfo.h \
+		../include/Configurations.h \
+		../include/Robot.h \
+		../include/Grouping.h \
+		../include/Build_Robot.h \
+		../include/Segmentation.h \
+		../include/Ball.h \
+		../include/controlador.h \
+		../include/serialcomm.h \
+		../include/constantes_robot.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QWidget \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QString \
+		../include/strategy.h \
+		../include/Communication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPort \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialport.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPortInfo \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QDebug \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QStringList \
+		../include/comandos.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplication \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qguiapplication.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qinputmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
-mainwindow.o: ../src/mainwindow.cpp ui_mainwindow.h
+mainwindow.o: ../src/mainwindow.cpp ../include/mainwindow.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMainWindow \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qconfig.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlogging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qflags.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmutex.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmargins.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qrect.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsize.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpalette.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcolor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgb.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qbrush.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qregion.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qline.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtransform.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpainterpath.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qimage.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpixmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qhash.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfont.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qfontinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qcursor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qkeysequence.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qevent.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qvariant.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qmap.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdebug.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qlocale.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qset.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurl.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qurlquery.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfile.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvector2d.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qicon.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMessageBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QTimer \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qtimer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qbasictimer.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/QImage \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QFileDialog \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qdir.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qfileinfo.h \
+		../include/Configurations.h \
+		../include/Robot.h \
+		../include/Grouping.h \
+		../include/Build_Robot.h \
+		../include/Segmentation.h \
+		../include/Ball.h \
+		../include/controlador.h \
+		../include/serialcomm.h \
+		../include/constantes_robot.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QWidget \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QString \
+		../include/strategy.h \
+		../include/Communication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPort \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialport.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/QSerialPortInfo \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtSerialPort/qserialportinfo.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QDebug \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QStringList \
+		../include/comandos.h \
+		ui_mainwindow.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/QVariant \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/QIcon \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QAction \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qaction.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QApplication \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QCheckBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qcheckbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QComboBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qcombobox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qvalidator.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qregularexpression.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qslider.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qstyle.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qframe.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QFrame \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGridLayout \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGroupBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLabel \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlabel.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLineEdit \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtextcursor.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtextformat.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qpen.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtGui/qtextoption.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMenu \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmenu.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMenuBar \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qmenubar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QPushButton \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QScrollArea \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QSlider \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QSpacerItem \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QSpinBox \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QStatusBar \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qstatusbar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QTabWidget \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QToolBar \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/qtoolbar.h \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/mainwindow.cpp
 
-serialcomm.o: ../src/serialcomm.cpp 
+serialcomm.o: ../src/serialcomm.cpp ../include/serialcomm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o serialcomm.o ../src/serialcomm.cpp
 
-strategy.o: ../src/strategy.cpp 
+strategy.o: ../src/strategy.cpp ../include/strategy.h \
+		../include/Robot.h \
+		../include/Grouping.h \
+		../include/Ball.h \
+		../include/Configurations.h \
+		../include/controlador.h \
+		../include/serialcomm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o strategy.o ../src/strategy.cpp
+
+qrc_recurso.o: qrc_recurso.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_recurso.o qrc_recurso.cpp
 
 moc_constantes_robot.o: moc_constantes_robot.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_constantes_robot.o moc_constantes_robot.cpp
