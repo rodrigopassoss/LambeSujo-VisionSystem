@@ -40,7 +40,8 @@ Sempre que for mexer no código, verificar se há novas alterações pra trabalh
 
  Após fazer mudanças, você deve salvá-las e refazer o upload dos arquivos.
 
-1 - 
+1 - git add
+
     a) git add [Arquivo 1] [Arquivo 2] [Arquivo 3] ... 
 
     b) git add path/to/[Arquivo 1] path2/to/[Arquivo 2] ... (Arquivos de diferentes diretórios)
