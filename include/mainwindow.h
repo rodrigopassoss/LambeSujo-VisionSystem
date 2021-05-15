@@ -48,6 +48,7 @@
 #include "../include/constantes_robot.h"
 #include "../include/strategy.h"
 #include "../include/Communication.h"
+#include "../utils/qcustomplot.h"
 
 // incluido por lucas - INICIO
 #include <math.h>
@@ -65,6 +66,7 @@
 
 
 using namespace rs2;
+
 
 namespace Ui {
 class MainWindow;
@@ -182,6 +184,19 @@ private:
 
     // Objeto para instaciar a Comunicação
     communication *SerialComm;
+
+    //Plot das Velocidades
+    void plotComm();
+    void DefplotComm();
+    QVector<double> *x_data;
+
+    // Atributos para armazenar as velocidades lidas
+    QVector<double> *VL_data;
+    QVector<double> *VR_data;
+    //Taxa de atualização do Plot
+    int upatatetaxa = 0;
+
+
 
 private Q_SLOTS:
 

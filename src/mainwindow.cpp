@@ -208,6 +208,9 @@ MainWindow::MainWindow(QWidget *parent) :
     SerialComm = new communication();
     info_ports();
 
+    DefplotComm();
+
+
 }
 
 void MainWindow::Refresh_position_robots()
@@ -598,6 +601,18 @@ void MainWindow::Refresh_position_robots()
     double aux = 1000*(end-start)/CLOCKS_PER_SEC;
     QString tempo = QString::number(aux);
     ui->milesegundos->setText(tempo);*/
+
+     upatatetaxa++;
+    //Atualização das Velocidades
+    if(upatatetaxa>25)
+    {
+        VL_data->pop_front();
+        VL_data->push_back(30 + 30*sin(contador));
+        VR_data->pop_front();
+        VR_data->push_back(60 + 40*cos(contador));
+        plotComm();
+        upatatetaxa=0;
+    }
 }
 
 void MainWindow::calibration()
@@ -754,6 +769,42 @@ MainWindow::~MainWindow()
     out.close();
 
     delete ui;
+}
+
+void MainWindow::plotComm()
+{
+    ui->qcustomplot->graph(0)->setData((*x_data), (*VL_data));
+    ui->qcustomplot->graph(1)->setData((*x_data), (*VR_data));
+    ui->qcustomplot->replot();
+}
+
+void MainWindow::DefplotComm()
+{
+    // generate some data:
+    x_data = new QVector<double>(101);
+    VL_data = new QVector<double>(101);
+    VR_data = new QVector<double>(101);
+
+    for (int i=0; i<100; ++i)
+    {
+      (*x_data)[i] = i;
+      (*VL_data)[i] = 30 + 30*sin(i);
+      (*VR_data)[i] = 60 + 40*cos(i);
+    }
+    // create graph and assign data to it:
+    ui->qcustomplot->addGraph();
+    ui->qcustomplot->addGraph();
+    //ui->widget->graph(1)->setData(x, x);
+    ui->qcustomplot->graph(0)->setPen(QPen(Qt::red));
+    ui->qcustomplot->graph(1)->setPen(QPen(Qt::blue));
+    // give the axes some labels:
+    ui->qcustomplot->yAxis->setLabel("Vel");
+    // set axes ranges, so we see all data:
+    ui->qcustomplot->xAxis->setRange(0, 100);
+    ui->qcustomplot->yAxis->setRange(-105, 105);
+    //tirando o label inferior
+    ui->qcustomplot->xAxis->setVisible(false);
+    ui->qcustomplot->replot();
 }
 
 
@@ -1457,4 +1508,5 @@ void MainWindow::on_connect_disconnect_clicked()
     SerialComm->def_port(ui->select_ports->currentText());
     SerialComm->connectToSerial();
     info_ports();
+
 }

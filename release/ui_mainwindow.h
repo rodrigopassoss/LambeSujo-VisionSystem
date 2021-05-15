@@ -19,6 +19,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -34,6 +35,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "../utils/qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -447,6 +449,37 @@ public:
     QComboBox *select_ports;
     QPushButton *refresh_ports;
     QLabel *status;
+    QCustomPlot *qcustomplot;
+    QGroupBox *groupBox_6;
+    QGridLayout *gridLayout_81;
+    QHBoxLayout *horizontalLayout_5;
+    QGridLayout *gridLayout_79;
+    QLabel *label_21;
+    QLCDNumber *lcdNumber;
+    QSpacerItem *horizontalSpacer_14;
+    QSpacerItem *horizontalSpacer_15;
+    QGridLayout *gridLayout_80;
+    QLabel *label_22;
+    QLCDNumber *lcdNumber_2;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout_73;
+    QLabel *label_18;
+    QComboBox *comboBox_2;
+    QSpacerItem *horizontalSpacer_10;
+    QGroupBox *groupBox_5;
+    QGridLayout *gridLayout_78;
+    QGridLayout *gridLayout_77;
+    QGridLayout *gridLayout_75;
+    QGridLayout *gridLayout_72;
+    QLabel *label_19;
+    QSlider *sendvl;
+    QSpinBox *sendvl2;
+    QGridLayout *gridLayout_76;
+    QGridLayout *gridLayout_74;
+    QSlider *sendvr;
+    QLabel *label_20;
+    QSpinBox *sendvr2;
     QMenuBar *menuBar;
     QMenu *menu_Classificadores;
     QMenu *menuTime;
@@ -634,7 +667,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, -71, 1442, 975));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 1442, 975));
         gridLayout_63 = new QGridLayout(scrollAreaWidgetContents_4);
         gridLayout_63->setSpacing(6);
         gridLayout_63->setContentsMargins(11, 11, 11, 11);
@@ -3218,6 +3251,171 @@ public:
 
         gridLayout_71->addWidget(status, 0, 1, 1, 1);
 
+        qcustomplot = new QCustomPlot(tab_7);
+        qcustomplot->setObjectName(QString::fromUtf8("qcustomplot"));
+        qcustomplot->setGeometry(QRect(570, 50, 811, 251));
+        groupBox_6 = new QGroupBox(tab_7);
+        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setGeometry(QRect(980, 330, 291, 111));
+        gridLayout_81 = new QGridLayout(groupBox_6);
+        gridLayout_81->setSpacing(6);
+        gridLayout_81->setContentsMargins(11, 11, 11, 11);
+        gridLayout_81->setObjectName(QString::fromUtf8("gridLayout_81"));
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        gridLayout_79 = new QGridLayout();
+        gridLayout_79->setSpacing(6);
+        gridLayout_79->setObjectName(QString::fromUtf8("gridLayout_79"));
+        label_21 = new QLabel(groupBox_6);
+        label_21->setObjectName(QString::fromUtf8("label_21"));
+
+        gridLayout_79->addWidget(label_21, 0, 1, 1, 1);
+
+        lcdNumber = new QLCDNumber(groupBox_6);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+        lcdNumber->setProperty("value", QVariant(0.000000000000000));
+        lcdNumber->setProperty("intValue", QVariant(0));
+
+        gridLayout_79->addWidget(lcdNumber, 0, 3, 1, 1);
+
+        horizontalSpacer_14 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_79->addItem(horizontalSpacer_14, 0, 0, 1, 1);
+
+
+        horizontalLayout_5->addLayout(gridLayout_79);
+
+        horizontalSpacer_15 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer_15);
+
+        gridLayout_80 = new QGridLayout();
+        gridLayout_80->setSpacing(6);
+        gridLayout_80->setObjectName(QString::fromUtf8("gridLayout_80"));
+        label_22 = new QLabel(groupBox_6);
+        label_22->setObjectName(QString::fromUtf8("label_22"));
+
+        gridLayout_80->addWidget(label_22, 0, 0, 1, 1);
+
+        lcdNumber_2 = new QLCDNumber(groupBox_6);
+        lcdNumber_2->setObjectName(QString::fromUtf8("lcdNumber_2"));
+
+        gridLayout_80->addWidget(lcdNumber_2, 0, 1, 1, 1);
+
+
+        horizontalLayout_5->addLayout(gridLayout_80);
+
+
+        gridLayout_81->addLayout(horizontalLayout_5, 0, 0, 1, 1);
+
+        widget = new QWidget(tab_7);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(600, 320, 311, 143));
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        gridLayout_73 = new QGridLayout();
+        gridLayout_73->setSpacing(6);
+        gridLayout_73->setObjectName(QString::fromUtf8("gridLayout_73"));
+        label_18 = new QLabel(widget);
+        label_18->setObjectName(QString::fromUtf8("label_18"));
+
+        gridLayout_73->addWidget(label_18, 0, 0, 1, 1);
+
+        comboBox_2 = new QComboBox(widget);
+        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
+
+        gridLayout_73->addWidget(comboBox_2, 0, 1, 1, 1);
+
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_73->addItem(horizontalSpacer_10, 0, 2, 1, 1);
+
+
+        verticalLayout->addLayout(gridLayout_73);
+
+        groupBox_5 = new QGroupBox(widget);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        gridLayout_78 = new QGridLayout(groupBox_5);
+        gridLayout_78->setSpacing(6);
+        gridLayout_78->setContentsMargins(11, 11, 11, 11);
+        gridLayout_78->setObjectName(QString::fromUtf8("gridLayout_78"));
+        gridLayout_77 = new QGridLayout();
+        gridLayout_77->setSpacing(6);
+        gridLayout_77->setObjectName(QString::fromUtf8("gridLayout_77"));
+        gridLayout_75 = new QGridLayout();
+        gridLayout_75->setSpacing(6);
+        gridLayout_75->setObjectName(QString::fromUtf8("gridLayout_75"));
+        gridLayout_72 = new QGridLayout();
+        gridLayout_72->setSpacing(6);
+        gridLayout_72->setObjectName(QString::fromUtf8("gridLayout_72"));
+        label_19 = new QLabel(groupBox_5);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+
+        gridLayout_72->addWidget(label_19, 0, 0, 1, 1);
+
+        sendvl = new QSlider(groupBox_5);
+        sendvl->setObjectName(QString::fromUtf8("sendvl"));
+        sendvl->setMinimum(-100);
+        sendvl->setMaximum(100);
+        sendvl->setOrientation(Qt::Horizontal);
+
+        gridLayout_72->addWidget(sendvl, 0, 1, 1, 1);
+
+
+        gridLayout_75->addLayout(gridLayout_72, 0, 0, 1, 1);
+
+        sendvl2 = new QSpinBox(groupBox_5);
+        sendvl2->setObjectName(QString::fromUtf8("sendvl2"));
+        sendvl2->setMinimum(-100);
+        sendvl2->setMaximum(100);
+
+        gridLayout_75->addWidget(sendvl2, 0, 1, 1, 1);
+
+
+        gridLayout_77->addLayout(gridLayout_75, 0, 0, 1, 1);
+
+        gridLayout_76 = new QGridLayout();
+        gridLayout_76->setSpacing(6);
+        gridLayout_76->setObjectName(QString::fromUtf8("gridLayout_76"));
+        gridLayout_74 = new QGridLayout();
+        gridLayout_74->setSpacing(6);
+        gridLayout_74->setObjectName(QString::fromUtf8("gridLayout_74"));
+        sendvr = new QSlider(groupBox_5);
+        sendvr->setObjectName(QString::fromUtf8("sendvr"));
+        sendvr->setMinimum(-100);
+        sendvr->setMaximum(100);
+        sendvr->setOrientation(Qt::Horizontal);
+
+        gridLayout_74->addWidget(sendvr, 0, 1, 1, 1);
+
+        label_20 = new QLabel(groupBox_5);
+        label_20->setObjectName(QString::fromUtf8("label_20"));
+
+        gridLayout_74->addWidget(label_20, 0, 0, 1, 1);
+
+
+        gridLayout_76->addLayout(gridLayout_74, 0, 0, 1, 1);
+
+        sendvr2 = new QSpinBox(groupBox_5);
+        sendvr2->setObjectName(QString::fromUtf8("sendvr2"));
+        sendvr2->setMinimum(-100);
+        sendvr2->setMaximum(100);
+
+        gridLayout_76->addWidget(sendvr2, 0, 1, 1, 1);
+
+
+        gridLayout_77->addLayout(gridLayout_76, 1, 0, 1, 1);
+
+
+        gridLayout_78->addLayout(gridLayout_77, 0, 0, 1, 1);
+
+
+        verticalLayout->addWidget(groupBox_5);
+
         tabWidget->addTab(tab_7, QString());
 
         gridLayout_63->addWidget(tabWidget, 0, 0, 1, 1);
@@ -3288,8 +3486,12 @@ public:
         QObject::connect(spinBox_gmin, SIGNAL(valueChanged(int)), gmin, SLOT(setValue(int)));
         QObject::connect(spinBox_rmax, SIGNAL(valueChanged(int)), rmax, SLOT(setValue(int)));
         QObject::connect(spinBox_rmin, SIGNAL(valueChanged(int)), rmin, SLOT(setValue(int)));
+        QObject::connect(sendvl, SIGNAL(valueChanged(int)), sendvl2, SLOT(setValue(int)));
+        QObject::connect(sendvl2, SIGNAL(valueChanged(int)), sendvl, SLOT(setValue(int)));
+        QObject::connect(sendvr, SIGNAL(valueChanged(int)), sendvr2, SLOT(setValue(int)));
+        QObject::connect(sendvr2, SIGNAL(valueChanged(int)), sendvr, SLOT(setValue(int)));
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(2);
         tabWidget_2->setCurrentIndex(1);
         MenuColorSpace->setCurrentIndex(0);
 
@@ -3441,6 +3643,13 @@ public:
         label_9->setText(QCoreApplication::translate("MainWindow", "Porta:", nullptr));
         refresh_ports->setText(QCoreApplication::translate("MainWindow", "Refresh", nullptr));
         status->setText(QString());
+        groupBox_6->setTitle(QCoreApplication::translate("MainWindow", "Resposta", nullptr));
+        label_21->setText(QCoreApplication::translate("MainWindow", "VL", nullptr));
+        label_22->setText(QCoreApplication::translate("MainWindow", "VR", nullptr));
+        label_18->setText(QCoreApplication::translate("MainWindow", "Select Robot", nullptr));
+        groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "Enviar Velocidade", nullptr));
+        label_19->setText(QCoreApplication::translate("MainWindow", "VL", nullptr));
+        label_20->setText(QCoreApplication::translate("MainWindow", "VR", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_7), QCoreApplication::translate("MainWindow", "Comunica\303\247\303\243o", nullptr));
         menu_Classificadores->setTitle(QCoreApplication::translate("MainWindow", "&Opcoes", nullptr));
         menuTime->setTitle(QCoreApplication::translate("MainWindow", "&Time", nullptr));

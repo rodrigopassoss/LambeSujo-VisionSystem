@@ -8,7 +8,7 @@ QT       += core gui serialport
 
 
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++11
 
@@ -33,6 +33,7 @@ INCLUDEPATH += /usr/include/librealsense2
 LIBS += -L/usr/local/lib -lrealsense2
 
 
+
 RC_ICONS = resources/gpr.ico
 
 SOURCES += \
@@ -48,7 +49,8 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/serialcomm.cpp \
-    src/strategy.cpp
+    src/strategy.cpp \
+    utils/qcustomplot.cpp
 
 HEADERS += \
     include/Ball.h \
@@ -62,7 +64,8 @@ HEADERS += \
     include/controlador.h \
     include/mainwindow.h \
     include/serialcomm.h \
-    include/strategy.h
+    include/strategy.h \
+    utils/qcustomplot.h
 
 FORMS += \
     ui/constantes_robot.ui \

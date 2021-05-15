@@ -624,7 +624,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-71</y>
+         <y>0</y>
          <width>1442</width>
          <height>975</height>
         </rect>
@@ -832,7 +832,7 @@
            </palette>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="Principal">
            <attribute name="title">
@@ -5970,6 +5970,224 @@
              </layout>
             </widget>
            </widget>
+           <widget class="QCustomPlot" name="qcustomplot" native="true">
+            <property name="geometry">
+             <rect>
+              <x>570</x>
+              <y>50</y>
+              <width>811</width>
+              <height>251</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="geometry">
+             <rect>
+              <x>980</x>
+              <y>330</y>
+              <width>291</width>
+              <height>111</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Resposta</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_81">
+             <item row="0" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <layout class="QGridLayout" name="gridLayout_79">
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="label_21">
+                   <property name="text">
+                    <string>VL</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QLCDNumber" name="lcdNumber">
+                   <property name="value" stdset="0">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="intValue" stdset="0">
+                    <number>0</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <spacer name="horizontalSpacer_14">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_80">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>VR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLCDNumber" name="lcdNumber_2"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>600</x>
+              <y>320</y>
+              <width>311</width>
+              <height>143</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_73">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_18">
+                 <property name="text">
+                  <string>Select Robot</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox_2"/>
+               </item>
+               <item row="0" column="2">
+                <spacer name="horizontalSpacer_10">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_5">
+               <property name="title">
+                <string>Enviar Velocidade</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_78">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_77">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_75">
+                    <item row="0" column="0">
+                     <layout class="QGridLayout" name="gridLayout_72">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_19">
+                        <property name="text">
+                         <string>VL</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QSlider" name="sendvl">
+                        <property name="minimum">
+                         <number>-100</number>
+                        </property>
+                        <property name="maximum">
+                         <number>100</number>
+                        </property>
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QSpinBox" name="sendvl2">
+                      <property name="minimum">
+                       <number>-100</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="1" column="0">
+                   <layout class="QGridLayout" name="gridLayout_76">
+                    <item row="0" column="0">
+                     <layout class="QGridLayout" name="gridLayout_74">
+                      <item row="0" column="1">
+                       <widget class="QSlider" name="sendvr">
+                        <property name="minimum">
+                         <number>-100</number>
+                        </property>
+                        <property name="maximum">
+                         <number>100</number>
+                        </property>
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_20">
+                        <property name="text">
+                         <string>VR</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QSpinBox" name="sendvr2">
+                      <property name="minimum">
+                       <number>-100</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </widget>
         </item>
@@ -6128,6 +6346,14 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>../../qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -6639,6 +6865,70 @@
     <hint type="destinationlabel">
      <x>193</x>
      <y>918</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sendvl</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sendvl2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>762</x>
+     <y>487</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>894</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sendvl2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sendvl</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>894</x>
+     <y>487</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>762</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sendvr</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sendvr2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>762</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>894</x>
+     <y>521</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sendvr2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sendvr</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>894</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>762</x>
+     <y>521</y>
     </hint>
    </hints>
   </connection>
