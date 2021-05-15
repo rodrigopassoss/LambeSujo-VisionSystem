@@ -42,9 +42,9 @@ Sempre que for mexer no código, verificar se há novas alterações pra trabalh
 
 1 - git add
 
-    a) git add [Arquivo 1] [Arquivo 2] [Arquivo 3] ... 
+    a) git add [Arquivo 1] [Arquivo 2] [Arquivo 3] 
 
-    b) git add path/to/[Arquivo 1] path2/to/[Arquivo 2] ... (Arquivos de diferentes diretórios)
+    b) git add path/to/[Arquivo 1] path2/to/[Arquivo 2]  (Arquivos de diferentes diretórios)
 
     c) git add path/to/.  (Todos os arquivos de um diretório específico)
 
