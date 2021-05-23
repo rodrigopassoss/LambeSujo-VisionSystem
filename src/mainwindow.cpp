@@ -604,7 +604,7 @@ void MainWindow::Refresh_position_robots()
 
      upatatetaxa++;
     //Atualização das Velocidades
-    if(upatatetaxa>25)
+    if(upatatetaxa>10)
     {
         VL_data->pop_front();
         VL_data->push_back(30 + 30*sin(contador));
@@ -1493,12 +1493,16 @@ void MainWindow::on_read_data_clicked()
     SerialComm->readData();
     ui->receive_data->setText(SerialComm->receive_data);
     info_ports();
+    ui->lcdNumber->display(SerialComm->byte_lido[0]);
+    ui->lcdNumber_2->display(SerialComm->byte_lido[1]);
+
+
 
 }
 
 void MainWindow::on_write_data_clicked()
 {
-    SerialComm->writeData(ui->send_data->text().toStdString().c_str());
+    SerialComm->writeData();
     info_ports();
 
 }
@@ -1508,5 +1512,47 @@ void MainWindow::on_connect_disconnect_clicked()
     SerialComm->def_port(ui->select_ports->currentText());
     SerialComm->connectToSerial();
     info_ports();
+}
 
+void MainWindow::on_sendvl_valueChanged(int value)
+{
+    int index = ui->select_robo->currentIndex();
+    if(index == 0)
+    {
+        for(int i = 1; i<10 ;i+=2)
+        {
+            SerialComm->write_buf[i]=SerialComm->converter_write(value);
+        }
+    }
+    else
+    {
+        for(int i = 1; i<10 ;i+=2)
+        {
+            SerialComm->write_buf[i]=0;
+        }
+        SerialComm->write_buf[2*index-1]=SerialComm->converter_write(value);
+
+    }
+
+}
+
+void MainWindow::on_sendvr_valueChanged(int value)
+{
+    int index = ui->select_robo->currentIndex();
+    if(index == 0)
+    {
+        for(int i = 2; i<=10 ;i+=2)
+        {
+            SerialComm->write_buf[i]=SerialComm->converter_write(value);
+        }
+    }
+    else
+    {
+        for(int i = 2; i<=10 ;i+=2)
+        {
+            SerialComm->write_buf[i]=0;
+        }
+        SerialComm->write_buf[2*index]=SerialComm->converter_write(value);
+
+    }
 }

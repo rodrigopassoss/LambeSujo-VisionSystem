@@ -3400,6 +3400,7 @@ mainwindow.o: ../src/mainwindow.cpp ../include/mainwindow.h \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGridLayout \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QGroupBox \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLCDNumber \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLabel \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QLineEdit \
 		/home/rodrigo/Qt/5.14.2/gcc_64/include/QtWidgets/QMenu \

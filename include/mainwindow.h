@@ -413,6 +413,10 @@ private Q_SLOTS:
 
      void on_connect_disconnect_clicked();
 
+     void on_sendvl_valueChanged(int value);
+
+     void on_sendvr_valueChanged(int value);
+
 Q_SIGNALS:
      void Robos(Robot rb1,Robot rb2,Robot rb3);
 

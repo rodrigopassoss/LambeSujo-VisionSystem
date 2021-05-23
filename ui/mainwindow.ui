@@ -6060,13 +6060,13 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>600</x>
               <y>320</y>
               <width>311</width>
-              <height>143</height>
+              <height>157</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
@@ -6080,7 +6080,38 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QComboBox" name="comboBox_2"/>
+                <widget class="QComboBox" name="select_robo">
+                 <item>
+                  <property name="text">
+                   <string>Todos</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>R1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>R2</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>R3</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>R4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>R5</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
                <item row="0" column="2">
                 <spacer name="horizontalSpacer_10">

@@ -27,6 +27,7 @@ void communication::connectToSerial()
         status = "Desconectado";  //Atualiza status para desconectado
         button_status = "Conectar";
         baund_rate.clear();       //limpando dados do Baud Rate
+        flag_comunicacao = 0;
         return;
     }
     // Parâmetros de Abertura da Porta Serial
@@ -40,7 +41,7 @@ void communication::connectToSerial()
         this->serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
     }
-
+    flag_comunicacao = 0;
     if(this->serialPort->open(QIODevice::ReadWrite)){ // Verificação se a porta realmente abriu
         status = "Conectado";
         baund_rate = "Communication Paramaters\n"
@@ -51,8 +52,14 @@ void communication::connectToSerial()
                      "Flow control: None";
         button_status = "Desconectar";
 
+        flag_comunicacao = 1; // altera o flag de comunicação 0 - SemComunicação e 1 - ComComunicação
+
+
         return;
+
     }
+
+
     status = "Falha ao tentar conectar";
     button_status = "Conectar";
     this->serialPort->close();
@@ -75,25 +82,83 @@ void communication::closeSerialPort()
 {
     if (this->serialPort->isOpen()){
         this->serialPort->close();
+        flag_comunicacao = 0;
+
     }
 }
 
-void communication::writeData(const QByteArray &data)
+void communication::writeData()
 {
-    this->serialPort->write(data);
-
+    QByteArray write_buf2;
+    write_buf2 = QByteArray::fromRawData((char*) write_buf,11);
+    if (flag_comunicacao)
+    {
+        this->serialPort->write(write_buf2);
+    }
+    if(int(write_buf2.at(1) >= 0))
+    {
+        byte_escrito = (int)write_buf2.at(1);
+    }
+    else
+    {
+        byte_escrito =  -(128 + (int)write_buf2.at(1));
+    }
 }
 
 void communication::readData()
 {
-    const QByteArray datareceive = this->serialPort->readAll();
+    if (flag_comunicacao)
+    {
+        if(this->serialPort->bytesAvailable())
+        {
+            QByteArray read_buf = this->serialPort->read(11);
+            const QString texto = read_buf;
+            if(int(read_buf.at(1) >= 0)){
+                byte_lido[0] = (int)read_buf.at(1);
+            }
+            else{
+                byte_lido[0] = -(128 + (int)read_buf.at(1));
+            }
+            if(int(read_buf.at(2) >= 0)){
+                byte_lido[1] = (int)read_buf.at(2);
+            }
+            else{
+                byte_lido[1] = -(128 + (int)read_buf.at(2));
+            }
+        }
+    }
+    //byte_lido = 10;
 
-    int x[11] = {0,0,0,0,0,0,0,0,0,0,0};//só testando
-    x[0] = datareceive.toInt();
-    receive_data = datareceive;
 }
 
 void communication::def_port(QString port)
 {
     current_port = port;
+}
+
+/* CONVERSÃO DOS DADOS ENVIADOS OU RECEBIDOS  */
+unsigned char communication::converter_write(int x)
+{
+    //OBSERVAÇÃO: SÓ FUNCIONA PRA VALORES MENORES QUE 127, MAS O PROTOCOLO É DE 0 A 100 COM BIT DE SINAL
+
+    unsigned char c = C0; //Inicializando com zero
+    if (x >= 0)
+    {
+        c = (unsigned char) x;
+    }
+    else
+    {
+        c = (unsigned char) (abs(x)+128); //Módulo + o bit de sinal
+    }
+    return c;
+}
+
+int communication::converter_read(unsigned char c)
+{
+    int x = 0; //Inicializando com zero
+    if (((int)c) >= 128)
+        x = -(((int)c) - 128);
+    else
+        x = (int)c;
+    return x;
 }

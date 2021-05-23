@@ -4,20 +4,20 @@
   <Brightness>64</Brightness>
   <Saturation>99</Saturation>
   <Exposure>10000</Exposure>
-  <ExpoAuto>51</ExpoAuto>
-  <Gamma>1598310656</Gamma>
-  <Nitidez>808464445</Nitidez>
-  <Ganho>1162104653</Ganho>
-  <WhiteBalance>1162104653</WhiteBalance>
-  <WhiteBalAuto>0</WhiteBalAuto>
-  <Luz_fundo>1145659212</Luz_fundo>
+  <ExpoAuto>68</ExpoAuto>
+  <Gamma>6648693</Gamma>
+  <Nitidez>1230982213</Nitidez>
+  <Ganho>1145634885</Ganho>
+  <WhiteBalance>1145634885</WhiteBalance>
+  <WhiteBalAuto>61</WhiteBalAuto>
+  <Luz_fundo>1146047839</Luz_fundo>
   <Contrast>99</Contrast>
-  <Matiz>1598310656</Matiz></Camera_Settings>
+  <Matiz>6648693</Matiz></Camera_Settings>
 <Cut_Frame_Points>
-  <X>37</X>
-  <Y>43</Y>
-  <Width>550</Width>
-  <Height>415</Height></Cut_Frame_Points>
+  <X>200</X>
+  <Y>105</Y>
+  <Width>300</Width>
+  <Height>500</Height></Cut_Frame_Points>
 <Blue>
   <Red_Max>255.</Red_Max>
   <Red_Min>35.</Red_Min>
@@ -30,21 +30,21 @@
   <Red_Min>131.</Red_Min>
   <Green_Max>255.</Green_Max>
   <Green_Min>80.</Green_Min>
-  <Blue_Max>152.</Blue_Max>
-  <Blue_Min>0.</Blue_Min></Yellow>
+  <Blue_Max>215.</Blue_Max>
+  <Blue_Min>131.</Blue_Min></Yellow>
 <Green>
   <Red_Max>77.</Red_Max>
   <Red_Min>0.</Red_Min>
   <Green_Max>255.</Green_Max>
   <Green_Min>90.</Green_Min>
-  <Blue_Max>81.</Blue_Max>
+  <Blue_Max>77.</Blue_Max>
   <Blue_Min>0.</Blue_Min></Green>
 <Orange>
   <Red_Max>255.</Red_Max>
   <Red_Min>0.</Red_Min>
   <Green_Max>82.</Green_Max>
   <Green_Min>0.</Green_Min>
-  <Blue_Max>26.</Blue_Max>
+  <Blue_Max>255.</Blue_Max>
   <Blue_Min>0.</Blue_Min></Orange>
 <Red>
   <Red_Max>0.</Red_Max>
@@ -65,9 +65,9 @@
   <Size>3</Size>
   <Size_close>6</Size_close></Mascara>
 <Resolution>
-  <Width>1970228528</Width>
-  <Height>1157653875</Height>
-  <index>1970228575</index></Resolution>
+  <Width>2019315755</Width>
+  <Height>1867329586</Height>
+  <index>727006540</index></Resolution>
 <Variaveis>
   <ftop>415</ftop>
   <fbot>6</fbot>

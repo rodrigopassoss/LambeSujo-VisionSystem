@@ -461,11 +461,11 @@ public:
     QGridLayout *gridLayout_80;
     QLabel *label_22;
     QLCDNumber *lcdNumber_2;
-    QWidget *widget;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout_73;
     QLabel *label_18;
-    QComboBox *comboBox_2;
+    QComboBox *select_robo;
     QSpacerItem *horizontalSpacer_10;
     QGroupBox *groupBox_5;
     QGridLayout *gridLayout_78;
@@ -3309,10 +3309,10 @@ public:
 
         gridLayout_81->addLayout(horizontalLayout_5, 0, 0, 1, 1);
 
-        widget = new QWidget(tab_7);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(600, 320, 311, 143));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget2 = new QWidget(tab_7);
+        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(600, 320, 311, 157));
+        verticalLayout = new QVBoxLayout(layoutWidget2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
@@ -3320,15 +3320,21 @@ public:
         gridLayout_73 = new QGridLayout();
         gridLayout_73->setSpacing(6);
         gridLayout_73->setObjectName(QString::fromUtf8("gridLayout_73"));
-        label_18 = new QLabel(widget);
+        label_18 = new QLabel(layoutWidget2);
         label_18->setObjectName(QString::fromUtf8("label_18"));
 
         gridLayout_73->addWidget(label_18, 0, 0, 1, 1);
 
-        comboBox_2 = new QComboBox(widget);
-        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
+        select_robo = new QComboBox(layoutWidget2);
+        select_robo->addItem(QString());
+        select_robo->addItem(QString());
+        select_robo->addItem(QString());
+        select_robo->addItem(QString());
+        select_robo->addItem(QString());
+        select_robo->addItem(QString());
+        select_robo->setObjectName(QString::fromUtf8("select_robo"));
 
-        gridLayout_73->addWidget(comboBox_2, 0, 1, 1, 1);
+        gridLayout_73->addWidget(select_robo, 0, 1, 1, 1);
 
         horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -3337,7 +3343,7 @@ public:
 
         verticalLayout->addLayout(gridLayout_73);
 
-        groupBox_5 = new QGroupBox(widget);
+        groupBox_5 = new QGroupBox(layoutWidget2);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
         gridLayout_78 = new QGridLayout(groupBox_5);
         gridLayout_78->setSpacing(6);
@@ -3647,6 +3653,13 @@ public:
         label_21->setText(QCoreApplication::translate("MainWindow", "VL", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "VR", nullptr));
         label_18->setText(QCoreApplication::translate("MainWindow", "Select Robot", nullptr));
+        select_robo->setItemText(0, QCoreApplication::translate("MainWindow", "Todos", nullptr));
+        select_robo->setItemText(1, QCoreApplication::translate("MainWindow", "R1", nullptr));
+        select_robo->setItemText(2, QCoreApplication::translate("MainWindow", "R2", nullptr));
+        select_robo->setItemText(3, QCoreApplication::translate("MainWindow", "R3", nullptr));
+        select_robo->setItemText(4, QCoreApplication::translate("MainWindow", "R4", nullptr));
+        select_robo->setItemText(5, QCoreApplication::translate("MainWindow", "R5", nullptr));
+
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "Enviar Velocidade", nullptr));
         label_19->setText(QCoreApplication::translate("MainWindow", "VL", nullptr));
         label_20->setText(QCoreApplication::translate("MainWindow", "VR", nullptr));
