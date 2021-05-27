@@ -67,6 +67,30 @@
 
 using namespace rs2;
 
+namespace Ui {
+ class mouseevents;
+
+}
+
+class mouseevents : public QLabel
+{
+    Q_OBJECT
+public:
+    explicit mouseevents(QWidget *parent = 0);
+
+    void mouseMoveEvent(QMouseEvent *ev) override;
+    void mousePressEvent(QMouseEvent *ev) override;
+
+    double x,y, x_press, y_press;
+
+
+
+Q_SIGNALS:
+
+    void Mouse_pos();
+    void Mouse_pressed();
+
+};
 
 namespace Ui {
 class MainWindow;
@@ -79,6 +103,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
 
 private:
     Ui::MainWindow *ui;
@@ -104,6 +129,7 @@ private:
     FILE* arquivo;
     filebuf fb;
     ostream *os;
+
 
     vector<Point>azul_pt;       // Vetor de coordenadas(x,y) da posição do centro de cada um dos corpos azuis.
     vector<Point>vermelho_pt;   // Vetor de coordenadas(x,y) da posição do centro de cada um dos corpos vermelhos.
@@ -141,7 +167,7 @@ private:
     Scalar HSV_Green[2];
 
     Mat Mascaras[2];            //vetor com as mascaras usadas para operações de abertura e fechamento.
-    Rect roi;                   // retângulo usado para fazer a retirada da imagem do campo
+    Rect2d roi;                   // retângulo usado para fazer a retirada da imagem do campo
 
     Segmentation *azul;         // Objeto responsável pela segmentação dos corpos de cor azul
     Segmentation *amarelo;      // Objeto responsável pela segmentação dos corpos de cor amarelo
@@ -196,9 +222,30 @@ private:
     //Taxa de atualização do Plot
     int upatatetaxa = 0;
 
+    //Pontos de Corte
+    vector<cv::Point> pontos_corte;
+    int action_calib;
+
 
 
 private Q_SLOTS:
+
+    void Mouse_current_pos();
+
+    /*
+         * Método: Mouse_pressed();
+         *
+         * Descrição: Chamdo com o evento do click do mouse.
+         *
+         * Parâmentros:
+         *            1) QMouseEvent *ev - essa classe é capaz de obter
+         *                                 todos os eventos do mouse.
+         *
+         * Retorno:
+         *       Nenhum.
+    */
+
+    void Mouse_pressed();
 
     /*
      * Método:Refresh_position_robots();
@@ -417,8 +464,10 @@ private Q_SLOTS:
 
      void on_sendvr_valueChanged(int value);
 
+
 Q_SIGNALS:
      void Robos(Robot rb1,Robot rb2,Robot rb3);
+
 
 
 };

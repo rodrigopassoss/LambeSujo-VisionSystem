@@ -9,6 +9,8 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <../include/mainwindow.h>
+#include <../utils/qcustomplot.h>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QAction>
@@ -35,7 +37,6 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "../utils/qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -92,9 +93,10 @@ public:
     QWidget *calibracao;
     QGridLayout *gridLayout_62;
     QGridLayout *gridLayout_61;
-    QLabel *janela_2;
+    mouseevents *janela_2;
     QVBoxLayout *verticalLayout_7;
     QHBoxLayout *horizontalLayout_114;
+    QLabel *label_23;
     QSpacerItem *horizontalSpacer_7;
     QPushButton *pushButton_default;
     QPushButton *pushButton_apply;
@@ -420,10 +422,10 @@ public:
     QPushButton *pushButton_linhas_campo;
     QCheckBox *checkBox_linha_secundaria;
     QFrame *line_6;
-    QSpacerItem *horizontalSpacer_12;
     QSpacerItem *verticalSpacer_8;
-    QSpacerItem *horizontalSpacer_11;
+    QSpacerItem *horizontalSpacer_12;
     QSpacerItem *verticalSpacer_10;
+    QSpacerItem *horizontalSpacer_11;
     QWidget *tab_7;
     QGroupBox *groupBox_4;
     QLabel *label_10;
@@ -849,7 +851,7 @@ public:
         gridLayout_61 = new QGridLayout();
         gridLayout_61->setSpacing(6);
         gridLayout_61->setObjectName(QString::fromUtf8("gridLayout_61"));
-        janela_2 = new QLabel(calibracao);
+        janela_2 = new mouseevents(calibracao);
         janela_2->setObjectName(QString::fromUtf8("janela_2"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -870,6 +872,11 @@ public:
         horizontalLayout_114 = new QHBoxLayout();
         horizontalLayout_114->setSpacing(6);
         horizontalLayout_114->setObjectName(QString::fromUtf8("horizontalLayout_114"));
+        label_23 = new QLabel(calibracao);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+
+        horizontalLayout_114->addWidget(label_23);
+
         horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_114->addItem(horizontalSpacer_7);
@@ -3087,21 +3094,21 @@ public:
 
         gridLayout_61->addLayout(verticalLayout_7, 1, 1, 1, 1);
 
-        horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_61->addItem(horizontalSpacer_12, 1, 0, 1, 1);
-
         verticalSpacer_8 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         gridLayout_61->addItem(verticalSpacer_8, 0, 0, 1, 1);
 
-        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_61->addItem(horizontalSpacer_11, 1, 2, 1, 1);
+        gridLayout_61->addItem(horizontalSpacer_12, 1, 0, 1, 1);
 
         verticalSpacer_10 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         gridLayout_61->addItem(verticalSpacer_10, 0, 2, 1, 1);
+
+        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_61->addItem(horizontalSpacer_11, 1, 2, 1, 1);
 
 
         gridLayout_62->addLayout(gridLayout_61, 0, 0, 1, 1);
@@ -3497,8 +3504,8 @@ public:
         QObject::connect(sendvr, SIGNAL(valueChanged(int)), sendvr2, SLOT(setValue(int)));
         QObject::connect(sendvr2, SIGNAL(valueChanged(int)), sendvr, SLOT(setValue(int)));
 
-        tabWidget->setCurrentIndex(2);
-        tabWidget_2->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(1);
+        tabWidget_2->setCurrentIndex(0);
         MenuColorSpace->setCurrentIndex(0);
 
 
@@ -3532,6 +3539,7 @@ public:
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Principal), QCoreApplication::translate("MainWindow", "Principal", nullptr));
         janela_2->setText(QString());
+        label_23->setText(QString());
         pushButton_default->setText(QCoreApplication::translate("MainWindow", "Defaut", nullptr));
         pushButton_apply->setText(QCoreApplication::translate("MainWindow", "Aplicar", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Defini\303\247\303\265es de Imagem", nullptr));

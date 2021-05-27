@@ -489,7 +489,7 @@
      <attribute name="title">
       <string>Config</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>11</x>
@@ -572,7 +572,7 @@
   <customwidget>
    <class>mouseevents</class>
    <extends>QLabel</extends>
-   <header location="global">mouseevents.h</header>
+   <header location="global">../include/mainwindow.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

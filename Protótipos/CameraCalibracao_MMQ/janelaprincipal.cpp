@@ -85,6 +85,7 @@ void JanelaPrincipal::Mouse_current_pos()
     x = ui->frame->x;
     y = ui->frame->y;
 
+
 }
 
 void JanelaPrincipal::Mouse_pressed()

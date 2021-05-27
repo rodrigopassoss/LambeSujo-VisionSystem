@@ -10,10 +10,10 @@ mouseevents::mouseevents(QWidget *parent) :
 
 void mouseevents::mouseMoveEvent(QMouseEvent *ev)
 {
-    this->x = ev->x();
-    this->y = ev->y();
-
+    this->x = ev->pos().x();
+    this->y = ev->pos().y();
     emit Mouse_pos();
+
 }
 
 void mouseevents::mousePressEvent(QMouseEvent *ev)

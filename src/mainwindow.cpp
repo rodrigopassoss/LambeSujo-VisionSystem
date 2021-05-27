@@ -5,6 +5,7 @@
 #define MIN_VALUE 1
 #define min 0
 #define max 1
+#define CORTAR 1
 
 enum RGB{R,G,B};
 enum HSV{H=3,S,V};
@@ -33,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::warning(this, tr("Erro"), "Erro na porta serial!", QMessageBox::Close);
 
     /////////////////////////////////// comunicação serial ///////////////////////////////
+
+    //Eventos do mouse
+    connect(ui->janela_2, SIGNAL(Mouse_pos()), this, SLOT(Mouse_current_pos()));
+    connect(ui->janela_2, SIGNAL(Mouse_pressed()), this, SLOT(Mouse_pressed()));
 
     connect(cronometro,SIGNAL(timeout()),this,SLOT(Refresh_position_robots()));
     cronometro->start(25);
@@ -209,6 +214,7 @@ MainWindow::MainWindow(QWidget *parent) :
     info_ports();
 
     DefplotComm();
+
 
 
 }
@@ -718,6 +724,11 @@ void MainWindow::calibration()
         cout << "Contador: " << cont_help << endl;
     }
 
+    if((!pontos_corte.empty())&&(action_calib==CORTAR))
+    {
+        rectangle(input,pontos_corte[0], Point(ui->janela_2->x,ui->janela_2->y), Scalar(0,0,255), 2);
+    }
+
     ui->janela_2->setPixmap(QPixmap::fromImage(image));
 
     end = clock();
@@ -771,6 +782,31 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+mouseevents::mouseevents(QWidget *parent) :
+     QLabel(parent)
+{
+
+}
+
+void mouseevents::mouseMoveEvent(QMouseEvent *ev)
+{
+    this->x = ev->pos().x();
+    this->y = ev->pos().y();
+    emit Mouse_pos();
+}
+
+void mouseevents::mousePressEvent(QMouseEvent *ev)
+{
+    if(ev->button() == Qt::LeftButton)
+        {
+            x_press = ev->localPos().x();
+            y_press = ev->localPos().y();
+
+            emit Mouse_pressed();
+
+        }
+}
+
 void MainWindow::plotComm()
 {
     ui->qcustomplot->graph(0)->setData((*x_data), (*VL_data));
@@ -805,6 +841,45 @@ void MainWindow::DefplotComm()
     //tirando o label inferior
     ui->qcustomplot->xAxis->setVisible(false);
     ui->qcustomplot->replot();
+}
+
+void MainWindow::Mouse_current_pos()
+{
+    ui->label_23->setText(QString("X = %1, Y = %2").arg(ui->janela_2->x).arg(ui->janela_2->y));
+
+    cout << "test" << endl;
+}
+
+void MainWindow::Mouse_pressed()
+{
+    ui->label_23->setText(QString("X = %1, Y = %2").arg(ui->janela_2->x_press).arg(ui->janela_2->y_press));
+    cout << "Button Pressed!" <<endl;
+
+    if(action_calib == CORTAR)
+    {
+
+        if(pontos_corte.size() < 2)
+        {
+
+            pontos_corte.push_back(Point(ui->janela_2->x_press, ui->janela_2->y_press));
+            cout << pontos_corte.back() << endl;
+            cout << "começa corte" <<endl;
+
+        }
+        else
+        {
+            roi = Rect2d(pontos_corte[0].x,pontos_corte[0].y,abs(pontos_corte[1].x - pontos_corte[0].x),abs(pontos_corte[1].y - pontos_corte[0].y));
+            pontos_corte.clear();
+            action_calib=0;
+            cout << "fim corte" <<endl;
+            cout << roi <<endl;
+
+        }
+
+
+    }
+
+
 }
 
 
@@ -1459,6 +1534,8 @@ void MainWindow::on_spinBox_p_area_t_valueChanged(int arg1)
 void MainWindow::on_pushButton_cortar_clicked()
 {
    // set->cropper = selectROI(input);  // Em Configurações configurar envio para arquivo xml
+    action_calib = 1;
+
 }
 
 void MainWindow::on_checkBox_help_lines_pressed()
@@ -1556,3 +1633,5 @@ void MainWindow::on_sendvr_valueChanged(int value)
 
     }
 }
+
+
