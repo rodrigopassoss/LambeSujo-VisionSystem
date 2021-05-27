@@ -9,7 +9,6 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
-#include <../include/mainwindow.h>
 #include <../utils/qcustomplot.h>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
@@ -37,6 +36,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "../include/mainwindow.h"
 
 QT_BEGIN_NAMESPACE
 

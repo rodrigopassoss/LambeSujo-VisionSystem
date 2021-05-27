@@ -572,7 +572,7 @@
   <customwidget>
    <class>mouseevents</class>
    <extends>QLabel</extends>
-   <header location="global">../include/mainwindow.h</header>
+   <header>mouseevents.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

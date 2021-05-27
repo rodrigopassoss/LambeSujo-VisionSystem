@@ -268,7 +268,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     double aux = pow(10,6)*(end-start)/CLOCKS_PER_SEC;
     cout << "Flip: " << aux << "us; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Flip: %f ", aux);
 
     start = clock();
     if(roi.area() > 0 && roi.width+roi.x < input.cols && roi.height+roi.y < input.rows)
@@ -276,7 +276,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,6)*(end-start)/CLOCKS_PER_SEC;
     cout << "Cut: " << aux << "us; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Cut: %f ", aux);
 
     // IMAGEM BINARIA DAS SEGMENTACOES DAS CORES
 
@@ -307,7 +307,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,3)*(end-start)/CLOCKS_PER_SEC;
     cout << "Limiarização 2: " << aux << "ms; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Lim2: %f ", aux);
 
 /*    #pragma omp parallel sections
     {
@@ -346,7 +346,7 @@ void MainWindow::Refresh_position_robots()
     aux = pow(10,3)*(end-start)/CLOCKS_PER_SEC;
     cout << "Limiarização: " << aux << "ms; ";
 
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Lim: %f ", aux);
 
     start = clock();
 
@@ -358,7 +358,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,3)*(end-start)/CLOCKS_PER_SEC;
     cout << "Grouping: " << aux << "ms; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Group: %f ", aux);
 
     //imshow("azul",*binary_img_azul);
     //imshow("amarelo",*binary_img_amarelo);
@@ -442,7 +442,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,3)*(end-start)/CLOCKS_PER_SEC;
     cout << "Grouping 2: " << aux << "ms; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Group 2: %f ", aux);
 
     // RETORNO DOS CENTROS E QUANTIDADE DE PIXEL VINCULADO A CADA CENTRO ... FEITO PELO AGRUPAMENTO
     // O RETORNO É UM VETOR DE PARES ONDE ... "vetor[i].first é o ponto do centro e vetor[i].second é a quantidade de contorno ou pixel vinculado a aquele centro"
@@ -466,7 +466,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,6)*(end-start)/CLOCKS_PER_SEC;
     cout << "Casamento: " << aux << "us; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Casamento: %f ", aux);
 
     // RETORNO DOS ROBOS JA FORMADOS
     robos = Machine_of_Robots->Get_robos();
@@ -568,7 +568,7 @@ void MainWindow::Refresh_position_robots()
     end = clock();
     aux = pow(10,3)*(end-start)/CLOCKS_PER_SEC;
     cout << "Plot: " << aux << "ms; ";
-    fprintf(arquivo, "%f ", aux);
+    fprintf(arquivo, "Plot: %f ", aux);
 
     Cerebro->vet1 = Machine_of_Robots->rb2_linha[1];
 
@@ -592,7 +592,7 @@ void MainWindow::Refresh_position_robots()
     aux = pow(10,6)*(end-start)/CLOCKS_PER_SEC;
     cout << "Estratégia: " << aux << "us; ";
     cout << endl;
-    fprintf(arquivo, "%f\n", aux);
+    fprintf(arquivo, "Estratégia: %f\n", aux);
 
     contador++;
 
@@ -660,8 +660,10 @@ void MainWindow::calibration()
     if(ui->checkBox_flip->isChecked())
         flip(input,input,1);
 
-    if(roi.area() > 0 && roi.width+roi.x < input.cols && roi.height+roi.y < input.rows)
+    if(roi.area()!=0 && pontos_corte.size() == 2)
+    {
         input = input(roi);
+    }
 
     // Decide se a imagem exibida é a imagem original ou com a limiarização
     if(ui->checkBox_limiar->isChecked())
@@ -722,11 +724,6 @@ void MainWindow::calibration()
         image = QImage((uchar*) input.data, input.cols, input.rows,input.step, QImage::Format_RGB888);
         cont_help++;
         cout << "Contador: " << cont_help << endl;
-    }
-
-    if((!pontos_corte.empty())&&(action_calib==CORTAR))
-    {
-        rectangle(input,pontos_corte[0], Point(ui->janela_2->x,ui->janela_2->y), Scalar(0,0,255), 2);
     }
 
     ui->janela_2->setPixmap(QPixmap::fromImage(image));
@@ -869,7 +866,6 @@ void MainWindow::Mouse_pressed()
         else
         {
             roi = Rect2d(pontos_corte[0].x,pontos_corte[0].y,abs(pontos_corte[1].x - pontos_corte[0].x),abs(pontos_corte[1].y - pontos_corte[0].y));
-            pontos_corte.clear();
             action_calib=0;
             cout << "fim corte" <<endl;
             cout << roi <<endl;
@@ -1535,6 +1531,8 @@ void MainWindow::on_pushButton_cortar_clicked()
 {
    // set->cropper = selectROI(input);  // Em Configurações configurar envio para arquivo xml
     action_calib = 1;
+    pontos_corte.clear();
+
 
 }
 
